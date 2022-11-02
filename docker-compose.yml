@@ -1,6 +1,3 @@
-# docker compose file for postgres and nodejs api server
-# and get a init script for the database to create the tables and insert the data
-# from script.sql
 
 version: '3.7'
 services:
@@ -9,7 +6,7 @@ services:
     container_name: db
     restart: always
     ports:
-      - 5433:5432
+      - '5430:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -17,20 +14,13 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   api:
-    image: node:12
+    image: node:alpine
     container_name: api
-    restart: always
     ports:
-      - 3001:3000
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5433
+      - '8087:8087'
+    command: sh -c "cd /app && npm install && npm run start"
     volumes:
-      - ./:/app
+      - .:/app
     working_dir: /app
-    command: npm start
     depends_on:
       - db
