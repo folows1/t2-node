@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         gols_visitante: DataTypes.INTEGER,
         data: DataTypes.DATE,
         horario: DataTypes.STRING,
-        local: DataTypes.STRING
+        estadio: DataTypes.STRING
     }, {
         timestamps: false,
         freezeTableName: true
