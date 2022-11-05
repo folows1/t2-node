@@ -1,9 +1,9 @@
 
 version: '3.7'
 services:
-  db:
+  db-jogos:
     image: postgres:12
-    container_name: db
+    container_name: db-jogos
     restart: always
     ports:
       - '5430:5432'
@@ -14,7 +14,7 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   api:
-    image: node:alpine
+    image: node:18.12.0
     container_name: api
     ports:
       - '8087:8087'
@@ -24,4 +24,4 @@ services:
       - .:/app
     command: sh -c "npm install && npm run start"
     depends_on:
-      - db
+      - db-jogos
