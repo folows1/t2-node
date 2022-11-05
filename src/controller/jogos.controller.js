@@ -34,6 +34,10 @@ const checkAndValidateUpdateRequest = (jogo) => {
     if (!gols_visitante) {
         errors.push('O campo gols_visitante é obrigatório')
     }
+    if (isNaN(gols_mandante) || isNaN(gols_visitante)) {
+        errors.push('O campo gols deve ser um número')
+        return errors
+    }
     if (gols_mandante < 0 || gols_visitante < 0) {
         errors.push('Os gols não podem ser negativos')
     }

@@ -1,8 +1,7 @@
-# Dockerfile for node api server
-FROM node:latest
-WORKDIR /usr/src/app
+FROM node:18.12.0
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY . .
-EXPOSE 3001
-CMD [ "npm", "start" ]
+COPY src ./
+EXPOSE 8087
+CMD ["npm", "start"]
