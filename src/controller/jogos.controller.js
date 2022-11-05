@@ -1,6 +1,6 @@
 const service = require('../service/jogos.service');
 
-const checkAndValidadeRequest = (jogo) => {
+const checkAndValidateRequest = (jogo) => {
     let errors = []
     const { mandante, visitante, data, estadio, horario } = jogo
     if (!mandante) {
@@ -25,6 +25,21 @@ const checkAndValidadeRequest = (jogo) => {
     return errors;
 }
 
+const checkAndValidateUpdateRequest = (jogo) => {
+    let errors = []
+    const { gols_mandante, gols_visitante } = jogo
+    if (!gols_mandante) {
+        errors.push('O campo gols_mandante é obrigatório')
+    }
+    if (!gols_visitante) {
+        errors.push('O campo gols_visitante é obrigatório')
+    }
+    if (gols_mandante < 0 || gols_visitante < 0) {
+        errors.push('Os gols não podem ser negativos')
+    }
+    return errors;
+}
+
 const formatRequestBody = (jogo) => {
     return {
         mandante: jogo.mandante,
@@ -39,7 +54,7 @@ const formatRequestBody = (jogo) => {
 
 const create = async (req, res) => {
     const jogo = req.body
-    const errors = checkAndValidadeRequest(jogo)
+    const errors = checkAndValidateRequest(jogo)
     if (errors.length > 0) {
         return res.status(400).json({ errors })
     }
@@ -59,47 +74,59 @@ const getAll = async (req, res) => {
 
 const getByTeamName = async (req, res) => {
     const time = req.params.time
-    if (!time) {
-        return res.status(400).send('O nome do time é obrigatório')
-    }
     const jogosDoTime = await service.getByTeamName(time)
     if (jogosDoTime.length > 0) {
-        res.send(jogosDoTime)
-    } else {
-        res.status(204).send('Nenhum jogo encontrado com o time informado')
-    }
-
+        return res.send(jogosDoTime)
+    } 
+    return res.status(204).send('Nenhum jogo encontrado do time informado')
 }
 
 const getByDate = async (req, res) => {
     const data = req.params.data
-    if (!data) {
-        return res.status(400).send('A data é obrigatória - formato YYYY-MM-DD')
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) {
+        return res.status(400).send('A data deve estar no formato YYYY-MM-DD')
     }
     const jogosDaData = await service.getByDate(data)
     if (jogosDaData.length > 0) {
-        res.send(jogosDaData)
-    } else {
-        res.status(204).send('Nenhum jogo encontrado com a data informada')
-    }
-
+        return res.send(jogosDaData)
+    } 
+    return res.status(204).send('Nenhum jogo encontrado com a data informada')
 }
 
 const update = async (req, res) => {
-    const id = Number(req.params.id)
-    if (!id) {
-        return res.status(400).send('O id do jogo é obrigatório')
+    const id = req.params.id
+    if (isNaN(id)) {
+        return res.status(400).send('O id do jogo deve ser um número')
     }
     const jogo = req.body
-
-    await service.update(id, req.body)
-    res.status(200).send('Jogo atualizado com sucesso!')
+    const errors = checkAndValidateUpdateRequest(jogo)
+    if (errors.length > 0) {
+        return res.status(400).json({ errors })
+    }
+    const formattedBody = {
+        gols_mandante: jogo.gols_mandante,
+        gols_visitante: jogo.gols_visitante
+    }
+    const [jogoAtualizado] = await service.update(id, formattedBody)
+    console.log('jogoAtualizado - update', jogoAtualizado)
+    if (jogoAtualizado) {
+        return res.status(200).send(jogoAtualizado)
+    }
+    return res.status(404).send('Jogo não encontrado')
 }
 
 const remove = async (req, res) => {
     const id = req.params.id
-    await service.remove(id)
-    res.status(204).send('Jogo removido com sucesso!')
+    if (isNaN(id)) {
+        return res.status(400).send('O id do jogo deve ser um número')
+    }
+    const jogoRemovido = await service.remove(id)
+    console.log('jogoRemovido - remove', jogoRemovido)
+    if (jogoRemovido) {
+        return res.status(200).send('Jogo removido com sucesso')
+    }
+    return res.status(404).send('Jogo não encontrado')
+
 }
 
 module.exports = {
