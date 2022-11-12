@@ -45,7 +45,7 @@ http://localhost:8087/api/v1/jogos
 ```bash
 http://localhost:8087/api/v1/jogos/time/:time
 ```
-##### EXAMPLE
+> EXAMPLE
 ```bash
 http://localhost:8087/api/v1/jogos/time/Santos
 ```
@@ -54,7 +54,7 @@ http://localhost:8087/api/v1/jogos/time/Santos
 ```bash
 http://localhost:8087/api/v1/jogos/data/:data
 ```
-##### EXAMPLE
+> EXAMPLE
 ```bash
 http://localhost:8087/api/v1/jogos/data/2019-05-05
 ```
@@ -63,7 +63,7 @@ http://localhost:8087/api/v1/jogos/data/2019-05-05
 ```bash
 http://localhost:8087/api/v1/jogos
 ```
-##### EXAMPLE
+> EXAMPLE
 ```json
 {
     "mandante": "Santos",
@@ -80,7 +80,7 @@ http://localhost:8087/api/v1/jogos
 ```bash
 http://localhost:8087/api/v1/jogos/:id
 ```
-##### EXAMPLE
+> EXAMPLE
 ```bash
 http://localhost:8087/api/v1/jogos/15
 ```
@@ -96,7 +96,7 @@ http://localhost:8087/api/v1/jogos/15
 ```bash
 http://localhost:8087/api/v1/jogos/:id
 ```
-##### EXAMPLE
+> EXAMPLE
 ```bash
 http://localhost:8087/api/v1/jogos/15
 ```
