@@ -114,7 +114,7 @@ const update = async (req, res) => {
     const [jogoAtualizado] = await service.update(id, formattedBody)
     console.log('jogoAtualizado - update', jogoAtualizado)
     if (jogoAtualizado) {
-        return res.status(200).send(jogoAtualizado)
+        return res.status(200).send('Jogo atualizado com sucesso')
     }
     return res.status(404).send('Jogo não encontrado')
 }

@@ -36,6 +36,7 @@ npm run start
 
 ### Endpoints
 
+
 #### GET ALL MATCHES
 ```bash
 http://localhost:8087/api/v1/jogos
@@ -51,6 +52,7 @@ http://localhost:8087/api/v1/jogos/time/Santos
 ```
 
 #### GET GAME BY MATCH DATE
+> **_NOTA:_** A data deve ser passada no formato **YYYY-MM-DD**
 ```bash
 http://localhost:8087/api/v1/jogos/data/:data
 ```
@@ -60,6 +62,7 @@ http://localhost:8087/api/v1/jogos/data/2019-05-05
 ```
 
 #### CREATE A NEW MATCH - POST
+> **_NOTA:_** Na criação de partida - ambos os times começam com 0 gols, indepndente do resultado passado no json.
 ```bash
 http://localhost:8087/api/v1/jogos
 ```
