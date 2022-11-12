@@ -18,7 +18,14 @@ Assim que o docker-compose terminar de subir os containers, a API estará dispon
 
 Caso queira acessar o banco de dados separadamente por um software de gerenciamento, conecte-se no localhost:5430 com usuário postgres e senha postgres.
 
-Imagem da API no DockerHub: [t2-node](https://hub.docker.com/r/folows/node-t2/)
+> Imagem da API no DockerHub: [t2-node](https://hub.docker.com/r/folows/node-t2/)
+
+## Rodando o projeto - API sem Docker Compose
+
+```bash
+docker build . -t folows/node-t2
+docker run -p 8087:8087 folows/node-t2
+```
 
 ## Rodando a API separadamente, sem Docker
 
