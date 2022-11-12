@@ -23,8 +23,8 @@ Caso queira acessar o banco de dados separadamente por um software de gerenciame
 ## Rodando o projeto - API sem Docker Compose
 
 ```bash
-docker build . -t folows/node-t2
-docker run -p 8087:8087 folows/node-t2
+docker build . -t folows/node-t2:1.0.0
+docker run -p 8087:8087 folows/node-t2:1.0.0
 ```
 
 ## Rodando a API separadamente, sem Docker
