@@ -28,10 +28,10 @@ const checkAndValidateRequest = (jogo) => {
 const checkAndValidateUpdateRequest = (jogo) => {
     let errors = []
     const { gols_mandante, gols_visitante } = jogo
-    if (!gols_mandante) {
+    if (!gols_mandante && gols_mandante !== 0) {
         errors.push('O campo gols_mandante é obrigatório')
     }
-    if (!gols_visitante) {
+    if (!gols_visitante && gols_visitante !== 0) {
         errors.push('O campo gols_visitante é obrigatório')
     }
     if (isNaN(gols_mandante) || isNaN(gols_visitante)) {
